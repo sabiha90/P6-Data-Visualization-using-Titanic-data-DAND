@@ -2,7 +2,7 @@
 <head>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="myStyles.css">
+<link rel="stylesheet" type="text/css" href="css/myStyles.css">
 </head>
 <body>
   <div id="textContainer"></div>
@@ -95,13 +95,13 @@
     d3.select("#btn_1").on("click", function()
     {
         button_after_click(this);
-        draw_charts("survival_by_sex.csv","Sex","Survived","Status");
+        draw_charts("data/survival_by_sex.csv","Sex","Survived","Status");
     });
     //calling the draw_charts() and button_after_click() functions to plot the bar chart for the number of survivors by age
     d3.select("#btn_3").on("click", function() 
     {
         button_after_click(this);
-        draw_charts("survival_age.csv","Age_Group","Total_survived",null);
+        draw_charts("data/survival_age.csv","Age_Group","Total_survived",null);
     });
     //function for making the bar charts using two variable analysis 
     //Survivor by passenger class and sex
@@ -111,7 +111,7 @@
         button_after_click(this);
     
         var svg = dimple.newSvg("#chartContainer", 650, 375);
-        d3.csv("titanic_data.csv", function (data) 
+        d3.csv("data/titanic_data.csv", function (data) 
         {
           var myChart = new dimple.chart(svg, data);
           myChart.setBounds(65, 30, 600, 305)
