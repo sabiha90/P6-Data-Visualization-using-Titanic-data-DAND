@@ -27,8 +27,8 @@ Feedback:
 
 Resources:
 
-https://bost.ocks.org/mike/bar/
-http://dimplejs.org/
-https://github.com/d3/d3/wiki/Tutorials
-https://w3schools.com/
-http://www.d3noob.org/2013/02/update-d3js-data-dynamically-button.html
+#https://bost.ocks.org/mike/bar/,
+#http://dimplejs.org/,
+#https://github.com/d3/d3/wiki/Tutorials,
+#https://w3schools.com/,
+#http://www.d3noob.org/2013/02/update-d3js-data-dynamically-button.html
