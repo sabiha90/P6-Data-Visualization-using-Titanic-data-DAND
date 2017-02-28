@@ -8,6 +8,7 @@
   <div id="textContainer"></div>
   <div id="buttonContainer"></div>
   <div id="chartContainer"></div>
+  
   <script type="text/javascript">
   var link = "titanic data"
     d3.select("#textContainer")
@@ -22,9 +23,8 @@
     d3.select("#textContainer")
           .append("p")
           .text("Click on the buttons below to visualize the survivors accordingly.");
-    //Creating buttons
     create_buttons("btn_1","Survivors by sex")
-    create_buttons("btn_2","Survivors by class & sex")
+    create_buttons("btn_2","Survivors by class")
     create_buttons("btn_3","Survivors by age")
     create_buttons("btn_4","Survivors by age & sex")
     //creating interactive buttons 
@@ -58,7 +58,7 @@
           .style("color", "white");
                 
      } 
-    //Adding finding to the chart
+
     function add_text(s,chart,text)
     {
         s.append("text")
@@ -72,15 +72,20 @@
 
     //Bar chart for visualizing the survivors by sex on page load
 
-    var svg = dimple.newSvg("#chartContainer", 700, 575); //height and width of the charts 650,375
+    var svg = dimple.newSvg("#chartContainer", 700, 400); //height and width of the charts 650,375
     d3.csv("data/titanic_data_1.csv", function (data) 
       {
           var myChart = new dimple.chart(svg, data);
-          myChart.setBounds(65, 30, 600, 305)
+        
+          myChart.setBounds(65, 30, 600, 305);
           var x = myChart.addCategoryAxis("x", "Sex");//creating the x axis
+          x.addOrderRule("Sex")
+
           var y = myChart.addPctAxis("y", "Passengers"); //creating the y axis
+
+          y.overrideMax = 1;   
           var s = myChart.addSeries("Status", dimple.plot.bar);
-          debugger; 
+          s.addOrderRule("Status",true);
           //plotting the bar chart
           x.fontSize = "auto";
           //size of the bars according to the values of the columns
@@ -94,7 +99,7 @@
                 width: parseFloat(s.attr("width")),
                 height: parseFloat(s.attr("height"))
               };
-          //plotting the percentage of passengers survived in the bars
+          //plotting the number of passengers survived in the bars
               if (rect.height >= 8)
                {
                   svg.append("text")
@@ -112,9 +117,13 @@
           //colors of the bars
           myChart.defaultColors = [
            new dimple.color("#22B8AC", 1),
-           new dimple.color("#2288B8", 1),];
-          add_text(svg,myChart,"There was a higher rate of female survivors than male")
+           new dimple.color(" #d3d3d3", 1),];
+          
           myChart.draw(1000);
+          //add_text(svg,myChart,"There was a higher rate of female survivors than male")
+          x.titleShape.text("There was a higher rate of female survivors than male");
+          y.titleShape.text("Survival Rate");
+
           
       });
 
@@ -124,7 +133,7 @@
      {
          d3.select("svg").remove();
          button_on_click(this);
-         var svg = dimple.newSvg("#chartContainer", 700, 575); //height and width of the charts 650,375
+         var svg = dimple.newSvg("#chartContainer", 700, 400); //height and width of the charts 650,375
 
          d3.csv("data/titanic_data_1.csv", function (data) 
          {
@@ -132,7 +141,9 @@
            myChart.setBounds(65, 30, 600, 305)
            var x = myChart.addCategoryAxis("x", "Sex");//creating the x axis
            var y = myChart.addPctAxis("y", "Passengers"); //creating the y axis
+           y.overrideMax = 1;  
            var s = myChart.addSeries("Status", dimple.plot.bar);
+           s.addOrderRule("Status",true);
           //plotting the bar chart
            x.fontSize = "auto";
           //size of the bars according to the values of the columns
@@ -146,7 +157,7 @@
                 width: parseFloat(s.attr("width")),
                 height: parseFloat(s.attr("height"))
               };
-          //plotting the percentage of passengers survived in the bars
+          //plotting the number of passengers survived in the bars
             if (rect.height >= 8)
                {
                   svg.append("text")
@@ -164,9 +175,12 @@
           //colors of the bars
           myChart.defaultColors = [
            new dimple.color("#22B8AC", 1),
-           new dimple.color("#2288B8", 1),];
-           add_text(svg,myChart,"There was higher rate of female survivors than male")
+           new dimple.color("#d3d3d3", 1),];
+           //add_text(svg,myChart,"There was higher rate of female survivors than male")
           myChart.draw(1000);
+          x.titleShape.text("There was a higher rate of female survivors than male");
+          y.titleShape.text("Survival Rate");
+
         });
      }).on("mouseout", function()
     {
@@ -190,6 +204,7 @@
            x.addOrderRule("Sex")
            var y = myChart.addPctAxis("y", "Passengers");
            var s = myChart.addSeries(["Sex","Status"], dimple.plot.bar);
+           s.addOrderRule("Status",true)
            s.afterDraw = function (shape, data) 
            {
              var s = d3.select(shape),
@@ -213,13 +228,16 @@
                    .text( d3.format("%")(data.height));
               }
             };
-         myChart.addLegend(150, 10, 500, 30, "right");
+         myChart.addLegend(150, 10, 530, 20, "right");
          myChart.defaultColors = [
           new dimple.color("#22B8AC", 1),
-          new dimple.color("#2288B8", 1),]; // blue
+          new dimple.color("#d3d3d3", 1),]; // blue
         
          myChart.draw(1000);
-         add_text(svg,myChart,"It is seen that the females of passenger class 1 were the maximum survivors")
+         //add_text(svg,myChart,"It is seen that the females of passenger class 1 were the maximum survivors")
+         x.titleShape.text("It is seen that the females of passenger class 1 were the maximum survivors");
+         y.titleShape.text("Survival Rate");
+
         });
 
       }).on("mouseout", function()
@@ -234,16 +252,21 @@
         d3.select("svg").remove();
         button_on_click(this);
         //draw_charts("titanic_data_1.csv","Age","PassengerId",null);
-        var svg = dimple.newSvg("#chartContainer", 700, 600);
+        var svg = dimple.newSvg("#chartContainer", 700, 400);
         d3.csv("data/titanic_data_1.csv", function (data) 
         {
+        
           var myChart = new dimple.chart(svg, data);
           myChart.setBounds(65, 30, 600, 305)
           var x = myChart.addCategoryAxis("x", "AgeGroup");//creating the x axis
-          x.addOrderRule(['Children', 'Adult', 'Youth', 'Senior', 'N/A']);//Setting the order of the x axis
+          //Setting the order of the x axis
+          x.addOrderRule(['Children', 'Youth', 'Adult', 'Senior','Others']);
+          //x.addOrderRule('NA',false);
+          
           var y = myChart.addPctAxis("y", "Passengers"); //creating the y axis
+          y.overrideMax = 1;  
           var s = myChart.addSeries("Status", dimple.plot.bar);
-          debugger; 
+          s.addOrderRule("Status",true)
           //plotting the bar chart
           x.fontSize = "auto";
           //size of the bars according to the values of the columns
@@ -276,9 +299,13 @@
           //colors of the bars
           myChart.defaultColors = [
            new dimple.color("#22B8AC", 1),
-           new dimple.color("#2288B8", 1),];
-           add_text(svg,myChart,"Senior citizens had the highest rate of survival");
-          myChart.draw(1000);
+           new dimple.color("#d3d3d3", 1),];
+           //add_text(svg,myChart,"Senior citizens had the highest rate of survival");
+           myChart.draw(1000);
+           x.titleShape.text("Children between the age group of 0-18 had the highest rate of survival");
+           y.titleShape.text("Survival Rate");
+         
+         
         });
   
 
@@ -295,16 +322,18 @@
         d3.select("svg").remove();
         button_on_click(this);
 
-      var svg = dimple.newSvg("#chartContainer", 700, 400);
+      var svg = dimple.newSvg("#chartContainer",700, 400);
       d3.csv("data/titanic_data_1.csv", function (data) 
       {
         var myChart = new dimple.chart(svg, data);
         myChart.setBounds(65, 45, 505, 315)
         var x = myChart.addCategoryAxis("x", ["AgeGroup","Sex"]);
-        x.addOrderRule(['Children', 'Adult', 'Youth', 'Senior', 'N/A']);
+        x.addOrderRule(['Children', 'Youth', 'Adult', 'Senior','Others']);
         //x.addOrderRule("Sex")
-        var y = myChart.addPctAxis("y", "Passengers");
-        var s = myChart.addSeries(["Status"], dimple.plot.bar);
+        var y = myChart.addMeasureAxis("y", "Survived");
+        //y.titleShape.text("Surviv Rate");
+        var s = myChart.addSeries(["Sex"], dimple.plot.bar);
+        s.addOrderRule("Status",true)
         s.afterDraw = function (shape, data) 
         {
             var s = d3.select(shape),
@@ -325,15 +354,18 @@
                   .style("font-family", "sans-serif")
                   .style("opacity", 0.6)
                   .style("pointer-events", "None")
-                  .text( d3.format("%")(data.height));
+                  .text( d3.format(",")(data.yValue));
             }
         };
         myChart.addLegend(150, 10, 500, 30, "right");
         myChart.defaultColors = [
           new dimple.color("#22B8AC", 1),
-          new dimple.color("#2288B8", 1),];
-          add_text(svg,myChart,"The female passengers between the age of 15-30 had the highest survival rate");
+          new dimple.color("#2065D6", 1),
+          ];
+          //add_text(svg,myChart,"The female passengers between the age of 15-30 had the highest survival rate");
         myChart.draw(1000);
+        x.titleShape.text("The female passengers between the age of 15-30 had the highest survival rate");
+        y.titleShape.text("Survival Rate");
       });
 }).on("mouseout", function()
     {
