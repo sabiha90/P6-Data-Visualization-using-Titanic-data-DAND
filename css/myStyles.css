@@ -11,7 +11,8 @@
     word-wrap: break-word;
   }
 button{
-      -webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+     
+       -webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
       box-shadow:inset 0px 1px 3px 0px #91b8b3;
       background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
       background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
@@ -19,6 +20,7 @@ button{
       background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
       background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
       background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+      
       background-color:#768d87;
       border-radius:5px;
       border:1px solid #566963;
@@ -27,9 +29,13 @@ button{
       color:#ffffff;
       font-family:Arial;
       font-size:15px;
-      padding:11px 23px;
+      padding: 11px 23px;
+      padding-left:15px;
       text-decoration:none;
-      margin-left:5px;
+      margin-left:25px;
+      margin-bottom: 25px;
+      text-align: center;
+
 }
 
 
